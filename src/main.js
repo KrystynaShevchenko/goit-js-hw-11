@@ -6,12 +6,14 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const form = document.querySelector('.form');
 const gallery = document.querySelector('.gallery');
 const container = document.querySelector('div');
-const inputDate = document.querySelector('input');
+const searchInput = document.querySelector('input');
 
 const showLoader = () => {
-  const loader = document.createElement('span');
-  loader.classList.add('loader');
-  container.append(loader);
+  if (!document.querySelector('.loader')) {
+    const loader = document.createElement('span');
+    loader.classList.add('loader');
+    container.append(loader);
+  }
 };
 
 const hideLoader = () => {
@@ -25,7 +27,7 @@ form.addEventListener('submit', event => {
   showLoader();
   gallery.innerHTML = '';
   event.preventDefault();
-  const searchTerm = inputDate.value;
+  const searchTerm = searchInput.value;
   searchImages(searchTerm);
 });
 
@@ -74,7 +76,7 @@ function searchImages(searchTerm) {
           captionDelay: 250,
         });
 
-        lightbox.on('show.simplelightbox').refresh();
+        lightbox.refresh(); // Виклик методу refresh поза обробником подій
         hideLoader();
       }
     })
